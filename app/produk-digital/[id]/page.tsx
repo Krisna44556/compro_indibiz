@@ -2,6 +2,18 @@
 
 import Link from "next/link";
 
+// 1. Tambahkan fungsi ini agar Next.js tahu ID apa saja yang akan dicetak jadi HTML statis
+export async function generateStaticParams() {
+  // Masukkan 5 ID produk digital sesuai brosur Indibiz milik klienmu
+  return [
+    { id: 'wms' },
+    { id: 'netmonk' },
+    { id: 'pijar-sekolah' },
+    { id: 'antares-eazy' },
+    { id: 'oca' }
+  ];
+}
+
 export default async function DetailProduk({ params }: { params: Promise<{ id: string }> }) {
   
   const resolvedParams = await params;

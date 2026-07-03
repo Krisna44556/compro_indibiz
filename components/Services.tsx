@@ -26,9 +26,8 @@ export default function Services() {
 
   const servicesData = [
     { id: 's1', number: '01', title: 'High-Speed Internet Business', description: 'Koneksi simetris dedicated khusus untuk operasional bisnis', tag: 'Core Network' },
-    { id: 's2', number: '02', title: 'Cloud Infrastructure', description: 'Penyimpanan data perusahaan yang aman dan cepat', tag: 'Enterprise' },
-    { id: 's3', number: '03', title: '24/7 Managed IT Support', description: 'Tim ahli yang siap memonitor infrastruktur digital Anda', tag: 'Security' },
-    { id: 's4', number: '04', title: 'Professional Technician', description: 'Penanganan cepat oleh tenaga ahli', tag: 'Security' }
+    { id: 's2', number: '02', title: '24/7 Managed IT Support', description: 'Tim ahli yang siap memonitor infrastruktur digital Anda', tag: 'Security' },
+    { id: 's3', number: '03', title: 'Professional Technician', description: 'Penanganan cepat oleh tenaga ahli', tag: 'Security' }
   ];
 
 

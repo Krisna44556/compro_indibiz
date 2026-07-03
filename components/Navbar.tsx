@@ -3,25 +3,38 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+interface MenuItem {
+  name: string;
+  id: string;
+  href: string;
+}
+
 export default function Navbar() {
   // State untuk menyimpan ID seksi yang sedang aktif dilihat user
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
 
+ // 1. Efek untuk mengubah latar belakang Navbar saat di-scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true); // Jika scroll lebih dari 50px, aktifkan mode solid
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
       } else {
-        setIsScrolled(false); // Jika kembali ke paling atas (Hero), kembalikan ke transparan
+        setIsScrolled(false);
       }
     };
-    // Daftar ID seksi yang ingin kita pantau posisinya
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
     const sections = ['home', 'paket', 'produk-digital', 'area-layanan', 'testimoni'];
     
     const observerOptions = {
       root: null,
-      rootMargin: '-50% 0px -50% 0px', // Mendeteksi tepat ketika seksi berada di tengah layar
+      // Memicu perpindahan tombol aktif ketika seksi mencapai area tengah layar
+      rootMargin: '-30% 0px -50% 0px',
       threshold: 0,
     };
 
@@ -44,7 +57,15 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Fungsi pembantu untuk memberikan kelas CSS aktif jika id cocok
+const menuItems = [
+  { name: 'Home', id: 'home', href: '/#' },
+  { name: 'Paket', id: 'paket', href: '#paket' },
+  { name: 'Produk Digital', id: 'produk-digital', href: '#produk-digital' },
+  { name: 'Area Layanan', id: 'area-layanan', href: '#area-layanan' },
+  { name: 'Testimoni', id: 'testimoni', href: '#testimoni' },
+];
+
+
 const getNavLinkClass = (id: string) => {
     const baseClass = "text-xs font-semibold px-4 py-2 rounded-full transition-all duration-300 ";
     
@@ -60,11 +81,21 @@ const getNavLinkClass = (id: string) => {
   };
 
   return (
-<nav className={`fixed top-0 left-0 right-0 h-20 z-50 px-6 md:px-24 flex justify-between items-center transition-all duration-500 ${
+
+  
+
+  <header 
+    className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100/80 py-4' 
+          : 'bg-transparent py-6'
+      }`}
+    >
+    <nav className={`fixed top-0 left-0 right-0 h-20 z-50 px-6 md:px-24 flex justify-between items-center transition-all duration-500 ${
       isScrolled 
         ? "bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm" 
         : "bg-transparent border-b border-white/5"
-    }`}>
+      }`}>
 
       {/* 1. Logo Brand */}
       <div className="flex items-center gap-4">
@@ -103,5 +134,6 @@ const getNavLinkClass = (id: string) => {
       </Link>
 
     </nav>
+    </header>
   );
 }

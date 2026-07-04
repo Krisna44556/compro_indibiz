@@ -8,24 +8,47 @@ export async function generateStaticParams() {
   return [
     { id: 'managed-wifi' },
     { id: 'netmonk' },
-    { id: 'pijar' },
-    { id: 'cloud-storage' },
-    { id: 'cctv-security' }
+    { id: 'pijar-sekolah' },
+    { id: 'oca' },
+    { id: 'cctv' }
   ];
 }
 
 export default async function DetailProduk({ params }: { params: Promise<{ id: string }> }) {
   
-  const resolvedParams = await params;
-  const productName = resolvedParams.id.replace('-', ' ').toUpperCase();
+  const { id } = await params;
 
+  // Pasangkan ID dengan Gambar Asli / Brosurnya di sini
+  const detailData: Record<string, { title: string; originalImage: string }> = {
+    'managed-wifi': {
+      title: 'WIFI Managed Service',
+      originalImage: '/poster/managed-wifi.jpg', // 👈 Gambar Brosur Asli
+    },
+    'cctv': {
+      title: 'CCTV Security',
+      originalImage: '/poster/cctv.jpg', // 👈 Gambar Brosur Asli
+    },
+    'oca': {
+      title: 'IndiBiz Oca',
+      originalImage: '/poster/cloud-storage.jpg',
+    },
+    'pijar-sekolah': {
+      title: 'IndiBiz Pijar',
+      originalImage: '/poster/pijar.jpg',
+    },
+    'netmonk': {
+      title: 'IndiBiz NetMonk',
+      originalImage: '/poster/netmonk.jpg',
+    },
+  };
+
+ const currentProduct = detailData[id] || detailData['cctv'];
   return (
     <main className="w-full min-h-screen bg-slate-50 pt-25 px-6 flex flex-col items-center">
       <div className="max-w-4xl w-full bg-white rounded-[32px] p-8 md:p-12 border border-slate-100 shadow-sm text-center">
         
-        <h1 className="text-3xl font-extrabold text-[#1e3fae] mb-2">{productName}</h1>
+        <h1 className="text-3xl font-extrabold text-[#1e3fae] mb-2">{currentProduct.title}</h1>
         <p className="text-[#1e3fae] text-sm mb-8">Halaman Detail Brosur dan Poster Layanan Digital</p>
-        
 
         <Link 
           href="/#produk-digital" 
@@ -39,8 +62,8 @@ export default async function DetailProduk({ params }: { params: Promise<{ id: s
         {/* Kontainer Tempat Poster Gambar */}
         <div className="w-full bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 overflow-hidden shadow-inner p-4 mt-8">
           <img 
-            src={`/poster/${resolvedParams.id}.jpg`} 
-            alt={`Poster ${productName}`}
+            src={currentProduct.originalImage} 
+            alt={`Poster ${currentProduct.title}`}
             className="w-full h-auto max-h-[80vh] object-contain rounded-xl"
             // 🛠️ PASTIKAN SUDAH TIDAK ADA KATA onError DI SINI
           />

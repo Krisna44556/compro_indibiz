@@ -24,7 +24,7 @@ export default function DigitalProducts() { // Pastikan nama komponen sesuai
     },
     {
       id: 'cctv',
-      title: 'CCTV',
+      title: 'IndiBiz Antares Eazy',
       desc: 'Sistem keamanan pantau pintar 24/7 dengan integrasi penyimpanan cloud aman.',
       bgImage: '/poster/cctv-security-cover.jpg',
     },

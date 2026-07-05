@@ -9,10 +9,12 @@ interface Artikel {
   category: 'Network' | 'Cloud' | 'Security';
   tags: string[];
   points: string[];
-  bgImage: string; // 🛠️ Sekarang menggunakan file gambar untuk background
+  bgGradient: string;
+  thumbnail: string;
 }
 
 export default function ArtikelPage() {
+  // State untuk filter kategori interaktif
   const [activeFilter, setActiveFilter] = useState<string>('Semua');
 
   const daftarArtikel: Artikel[] = [
@@ -26,7 +28,8 @@ export default function ArtikelPage() {
         'Integrasi Keamanan Jaringan',
         'Sistem Monitoring Real-time'
       ],
-      bgImage: '/poster/img1.jpeg', // 📸 Gambar cover penuh kartu 1
+      bgGradient: 'from-blue-100 to-sky-200/60 text-slate-900 border-sky-100',
+      thumbnail: '/poster/managed-wifi.jpg', // Ganti dengan aset gambar minimu
     },
     {
       id: 'manfaat-cloud-bisnis',
@@ -38,7 +41,8 @@ export default function ArtikelPage() {
         'Integrasi Keamanan Jaringan',
         'Sistem Monitoring Real-time'
       ],
-      bgImage: '/poster/img2.jpeg', // 📸 Gambar cover penuh kartu 2
+      bgGradient: 'from-blue-500 to-indigo-600 text-white border-blue-400/30 shadow-blue-500/10',
+      thumbnail: '/poster/cloud-storage.jpg',
     },
     {
       id: 'pentingnya-managed-it',
@@ -50,10 +54,12 @@ export default function ArtikelPage() {
         'Penting untuk Keamanan Data',
         'Sistem Monitoring Real-time'
       ],
-      bgImage: '/poster/img3.jpeg', // 📸 Gambar cover penuh kartu 3
+      bgGradient: 'from-slate-900 via-blue-950 to-slate-950 text-white border-slate-800 shadow-xl',
+      thumbnail: '/poster/cctv-security.jpg',
     },
   ];
 
+  // Menyaring artikel secara instan berdasarkan tombol filter yang diklik
   const artikelTersaring = activeFilter === 'Semua' 
     ? daftarArtikel 
     : daftarArtikel.filter(item => item.category === activeFilter);
@@ -89,40 +95,45 @@ export default function ArtikelPage() {
           ))}
         </div>
 
-        {/* 3-COLUMNS PREMIUM GRID LAYOUT DENGAN BACKGROUND COVER */}
+        {/* 3-COLUMNS PREMIUM GRID LAYOUT */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full items-stretch">
           {artikelTersaring.map((artikel) => (
             <div
               key={artikel.id}
-              className="relative rounded-[36px] overflow-hidden border border-slate-100 flex flex-col justify-between transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl min-h-[500px] p-8 md:p-9 group text-white shadow-md"
+              className={`relative rounded-[36px] p-8 md:p-9 border flex flex-col justify-between transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl bg-gradient-to-b group ${artikel.bgGradient}`}
             >
               
-              {/* 🛠️ GAMBAR COVER BACKGROUND PENH */}
-              <img 
-                src={artikel.bgImage} 
-                alt={artikel.title}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-0"
-              />
-              
-              {/* 🛠️ LAPISAN GRADASI GELAP AGAR TEKS TETAP JELAS TERBACA */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30 z-10"></div>
+              {/* BAGIAN ATAS: BADGES & THUMBNAIL */}
+              <div>
+                <div className="flex items-start justify-between gap-4 mb-6">
+                  {/* PIL BADGES */}
+                  <div className="flex flex-wrap gap-1.5 max-w-[70%]">
+                    {artikel.tags.map((tag, i) => (
+                      <span 
+                        key={i} 
+                        className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${
+                          artikel.bgGradient.includes('text-slate-900')
+                            ? 'bg-slate-900/5 border-slate-900/10 text-slate-800'
+                            : 'bg-white/10 border-white/20 text-white/90'
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
 
-              {/* KONTEN ATAS (Terjaga di atas z-index gambar) */}
-              <div className="relative z-20">
-                {/* PIL BADGES */}
-                <div className="flex flex-wrap gap-1.5 max-w-[90%] mb-6">
-                  {artikel.tags.map((tag, i) => (
-                    <span 
-                      key={i} 
-                      className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/15 border border-white/20 text-white/90 backdrop-blur-sm"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  {/* GAMBAR MINI (THUMBNAIL BULAT DI POJOK) */}
+                  <div className="w-16 h-16 rounded-2xl overflow-hidden border border-white/40 shadow-md shrink-0">
+                    <img 
+                      src={artikel.thumbnail} 
+                      alt={artikel.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    />
+                  </div>
                 </div>
 
                 {/* JUDUL UTAMA */}
-                <h3 className="text-xl md:text-2xl font-black tracking-tight leading-snug mb-8 min-h-[56px] line-clamp-3 text-white">
+                <h3 className="text-xl md:text-2xl font-black tracking-tight leading-snug mb-8 min-h-[56px] line-clamp-3">
                   {artikel.title}
                 </h3>
 
@@ -130,7 +141,11 @@ export default function ArtikelPage() {
                 <div className="mb-8">
                   <Link
                     href={`/artikel/${artikel.id}`}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-sm font-bold bg-white text-blue-950 hover:bg-slate-100 shadow-sm transition-all duration-300 transform group-hover:scale-[1.02]"
+                    className={`w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-sm font-bold shadow-sm transition-all duration-300 transform group-hover:scale-[1.02] ${
+                      artikel.bgGradient.includes('text-slate-900')
+                        ? 'bg-blue-600/10 text-blue-700 hover:bg-blue-600/20'
+                        : 'bg-white text-blue-900 hover:bg-slate-50'
+                    }`}
                   >
                     Baca Artikel Lengkap
                     <svg 
@@ -146,13 +161,17 @@ export default function ArtikelPage() {
                 </div>
               </div>
 
-              {/* KONTEN BAWAH: CHECKLIST POIN RELEVAN */}
-              <div className="relative z-20 pt-6 border-t border-white/10">
+              {/* BAGIAN BAWAH: CHECKLIST POIN RELEVAN */}
+              <div className={`pt-6 border-t ${
+                artikel.bgGradient.includes('text-slate-900') ? 'border-slate-900/10' : 'border-white/10'
+              }`}>
                 <ul className="space-y-3">
                   {artikel.points.map((poin, idx) => (
                     <li key={idx} className="flex items-center gap-3 text-xs md:text-sm font-semibold">
                       <svg
-                        className="w-4 h-4 shrink-0 text-blue-400"
+                        className={`w-4 h-4 shrink-0 ${
+                          artikel.bgGradient.includes('text-slate-900') ? 'text-blue-600' : 'text-blue-400'
+                        }`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -160,7 +179,7 @@ export default function ArtikelPage() {
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
-                      <span className="text-slate-200">
+                      <span className={artikel.bgGradient.includes('text-slate-900') ? 'text-slate-700' : 'text-slate-300'}>
                         {poin}
                       </span>
                     </li>

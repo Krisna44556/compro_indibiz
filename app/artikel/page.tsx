@@ -9,6 +9,7 @@ interface Artikel {
   category: 'Network' | 'Cloud' | 'Security';
   tags: string[];
   points: string[];
+  desc: string;
 }
 
 export default function ArtikelPage() {

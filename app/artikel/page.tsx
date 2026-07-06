@@ -28,7 +28,7 @@ export default function ArtikelPage() {
         'Integrasi Keamanan Jaringan',
         'Sistem Monitoring Real-time'
       ],
-     
+
     },
     {
       id: 'manfaat-cloud-bisnis',
@@ -57,14 +57,14 @@ export default function ArtikelPage() {
   ];
 
   // Menyaring artikel secara instan berdasarkan tombol filter yang diklik
-  const artikelTersaring = activeFilter === 'Semua' 
-    ? daftarArtikel 
+  const artikelTersaring = activeFilter === 'Semua'
+    ? daftarArtikel
     : daftarArtikel.filter(item => item.category === activeFilter);
 
   return (
     <div className="w-full min-h-screen pt-32 pb-20 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
-        
+
         {/* HEADER UTAMA */}
         <div className="text-center max-w-3xl mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
@@ -76,7 +76,7 @@ export default function ArtikelPage() {
         </div>
 
         {/* CONTROLLER FILTER INTERAKTIF */}
-        
+
 
         {/* 3-COLUMNS PREMIUM GRID LAYOUT */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full items-stretch">
@@ -85,10 +85,10 @@ export default function ArtikelPage() {
               key={artikel.id}
               className={`relative rounded-[36px] p-8 md:p-9 border flex flex-col justify-between transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl bg-gradient-to-b group ${artikel.id}`}
             >
-              
+
               {/* BAGIAN ATAS: BADGES & THUMBNAIL */}
               <div>
-                
+
 
                 {/* JUDUL UTAMA */}
                 <h3 className="text-xl md:text-2xl font-black tracking-tight leading-snug mb-8 min-h-[56px] line-clamp-3">
@@ -104,18 +104,17 @@ export default function ArtikelPage() {
                 <div className="mb-8">
                   <Link
                     href={`/artikel/${artikel.id}`}
-                    className={`w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-sm font-bold shadow-sm transition-all duration-300 transform group-hover:scale-[1.02] ${
-                      artikel.id.includes('text-slate-900')
+                    className={`w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-sm font-bold shadow-sm transition-all duration-300 transform group-hover:scale-[1.02] ${artikel.id.includes('text-slate-900')
                         ? 'bg-blue-600/10 text-blue-700 hover:bg-blue-600/20'
                         : 'bg-white text-blue-900 hover:bg-slate-50'
-                    }`}
+                      }`}
                   >
                     Baca Artikel Lengkap
-                    <svg 
-                      className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor" 
+                    <svg
+                      className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                       strokeWidth="2.5"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -125,7 +124,7 @@ export default function ArtikelPage() {
               </div>
 
               {/* BAGIAN BAWAH: CHECKLIST POIN RELEVAN */}
-              
+
 
             </div>
           ))}

@@ -50,12 +50,11 @@ export default async function DetailProduk({ params }: { params: Promise<{ id: s
         <h1 className="text-3xl font-extrabold text-[#1e3fae] mb-2">{currentProduct.title}</h1>
         <p className="text-[#1e3fae] text-sm mb-8">Halaman Detail Brosur dan Poster Layanan Digital</p>
 
+                {/* TOMBOL KEMBALI */}
         <Link 
           href="/#produk-digital" 
-          className="group flex items-center gap-2 text-xs font-semibold text-[#1e3fae] hover:text-blue-600 bg-white px-4 py-2.5 rounded-full border border-slate-100 shadow-sm transition-all duration-200 hover:-translate-x-1"
+          className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 bg-white px-5 py-2.5 rounded-full shadow-sm border border-slate-100 transition-all mb-8 group"
         >
-          {/* Ikon Panah Kiri */}
-          <span className="transform transition-transform group-hover:-translate-x-0.5"></span> 
           Kembali ke Beranda
         </Link>
 
